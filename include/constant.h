@@ -47,6 +47,10 @@ class Path {
         {
             return "version";
         }
+        static string drivePath()
+        {
+            return "/dev";
+        }
 };
 
 #endif // PATH_H
