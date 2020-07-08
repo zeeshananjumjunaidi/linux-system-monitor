@@ -26,6 +26,7 @@ class ProcessParser {
         static  Path path;
 
         static string getCmd(string pid){
+            string line;
             ifstream stream = Util::getStream((Path::basePath() + pid + Path::cmdPath()));
             std::getline(stream, line);
             return line;
@@ -110,7 +111,7 @@ class ProcessParser {
         {
             string line;
             string value;
-            float result;
+            //float result;
             ifstream stream = Util::getStream((Path::basePath() + pid + "/" +  Path::statPath()));
             getline(stream, line);
             string str = line;
@@ -174,7 +175,7 @@ class ProcessParser {
             string name3 = "Buffers:";
 
             string value;
-            int result;
+           // int result;
             ifstream stream = Util::getStream((Path::basePath() + Path::memInfoPath()));
             float total_mem = 0;
             float free_mem = 0;
@@ -223,8 +224,8 @@ class ProcessParser {
             string line;
             int result = 0;
             string name = "Threads:";
-            vector<string>_list = ProcessParser::getPidList();
-            for (int i=0 ; i<_list.size();i++) {
+            vector<string> _list = ProcessParser::getPidList();
+            for (size_t i=0 ; i<_list.size();i++) {
             string pid = _list[i];
             //getting every process and reading their number of their threads
             ifstream stream = Util::getStream((Path::basePath() + pid + Path::statusPath()));
@@ -238,6 +239,7 @@ class ProcessParser {
                 }
             }
             return result;
+            }
         }
         static int getTotalNumberOfProcesses()
         {
@@ -290,6 +292,12 @@ class ProcessParser {
             }
             return "";
 
+        }
+        static float getSysActiveCpuTime(vector<string> value){
+            return stof(value[0]);
+        }
+        static float getSysIdleCpuTime(vector<string> value){
+            return stof(value[0]);
         }
         static string printCpuStats(vector<string> values1, vector<string>values2){
             /*
